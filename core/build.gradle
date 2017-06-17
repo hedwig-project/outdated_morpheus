@@ -1,15 +1,38 @@
-group 'com.hedwig'
-version '1.0-SNAPSHOT'
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version '1.5.4.RELEASE'
+}
 
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
+jar {
+    group 'com.hedwig'
+    version '1.0-SNAPSHOT'
+    sourceCompatibility = 1.8
+}
 
 repositories {
     mavenCentral()
+    jcenter()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+
+    test {
+        java {
+            srcDirs = ['tests']
+        }
+    }
 }
 
 dependencies {
+    // Junit
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     // https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3
@@ -26,4 +49,15 @@ dependencies {
 
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     compile group: 'commons-codec', name: 'commons-codec', version: '1.9'
+
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    compile group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA'
+
+    // Spring Boot starter
+    compile("org.springframework.boot:spring-boot-starter")
+
+    // Sprint Boot Logging
+    compile("spring-boot-starter-logging")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }

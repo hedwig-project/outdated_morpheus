@@ -3,9 +3,10 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="core_main" target="1.8" />
+      <module name="core_src" target="1.8" />
       <module name="core_test" target="1.8" />
-      <module name="morpheus_main" target="1.5" />
-      <module name="morpheus_test" target="1.5" />
+      <module name="morpheus_main" target="1.8" />
+      <module name="morpheus_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

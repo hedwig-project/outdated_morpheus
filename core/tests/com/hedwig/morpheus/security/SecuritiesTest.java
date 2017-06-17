@@ -2,7 +2,7 @@ package com.hedwig.morpheus.security;
 
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import javax.net.ssl.SSLSocketFactory;
 import java.io.File;
