@@ -1,3 +1,5 @@
+package com.hedwig.morpheus.security;
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
@@ -97,7 +99,7 @@ public class Securities {
     public static SSLSocketFactory createSocketFactory(final String caCertificateFileName,
                                                        final String clientCertificateFileName,
                                                        final String clientKeyFileName) throws Exception {
-        final String clientKeyPassword = "";
+        final String clientKeyPassword = ""; // This should be changed, in order to use the actual password
         try {
             Security.addProvider(new BouncyCastleProvider());
 
@@ -113,4 +115,5 @@ public class Securities {
             throw new Exception("The TLS Socket Factory Could Not Be Created", e);
         }
     }
+
 }
