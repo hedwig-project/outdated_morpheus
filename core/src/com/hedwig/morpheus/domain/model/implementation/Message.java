@@ -8,17 +8,24 @@ import java.util.stream.Collectors;
 /**
  * Created by hugo. All rights reserved.
  */
-public class Message {
+public class Message implements Comparable<Message> {
     private final String topic;
     private final MessageType type;
     private final List<ControlParameter> controlParameters;
     private MessageBody body;
+    private MessagePriority priority;
 
     public Message(String topic, MessageType type, MessageBody body) {
         this.controlParameters = new LinkedList<>();
         this.type = type;
         this.body = body;
         this.topic = topic;
+        this.priority = MessagePriority.NORMAL;
+    }
+
+    @Override
+    public int compareTo(Message m) {
+        return this.priority.compareTo(m.getPriority());
     }
 
     public enum MessageType {
@@ -48,6 +55,20 @@ public class Message {
         public String toString() {
             return String.format("#%s\n", headerValue);
         }
+    }
+
+    public enum MessagePriority {
+        HIGH,
+        NORMAL,
+        LOW;
+    }
+
+    public MessagePriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(MessagePriority priority) {
+        this.priority = priority;
     }
 
     public String getTopic() {

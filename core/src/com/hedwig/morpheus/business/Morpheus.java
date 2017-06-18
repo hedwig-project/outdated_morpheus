@@ -3,6 +3,7 @@ package com.hedwig.morpheus.business;
 import com.hedwig.morpheus.configuration.EntryPoint;
 import com.hedwig.morpheus.domain.model.implementation.Message;
 import com.hedwig.morpheus.domain.model.implementation.Module;
+import com.hedwig.morpheus.domain.model.interfaces.IMessageReceiver;
 import com.hedwig.morpheus.domain.model.interfaces.IServer;
 import com.hedwig.morpheus.service.interfaces.IMessageManager;
 import com.hedwig.morpheus.service.interfaces.IModuleManager;
@@ -27,6 +28,7 @@ public class Morpheus {
     private final IMessageManager messageManager;
     private final IModuleManager moduleManager;
     private final ITopicManager topicManager;
+    private final IMessageReceiver messageReceiver;
 
     private final Logger logger = LoggerFactory.getLogger(EntryPoint.class);
 
@@ -34,15 +36,18 @@ public class Morpheus {
     public Morpheus(IMessageManager messageManager,
                     IModuleManager moduleManager,
                     ITopicManager topicManager,
-                    IServer server) {
+                    IServer server,
+                    IMessageReceiver messageReceiver) {
         this.messageManager = messageManager;
         this.moduleManager = moduleManager;
         this.topicManager = topicManager;
         this.server = server;
+        this.messageReceiver = messageReceiver;
     }
 
     public void start() {
         if (!connectToServer()) return;
+        messageReceiver.processQueue();
 
         Module kitchen = new Module("1", "kitchen", "hw/kitchen1");
         moduleManager.registerModule(kitchen);

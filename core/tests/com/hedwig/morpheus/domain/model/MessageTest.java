@@ -2,6 +2,9 @@ package com.hedwig.morpheus.domain.model;
 
 import com.hedwig.morpheus.domain.model.implementation.Message;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 
@@ -10,6 +13,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by hugo. All rights reserved.
  */
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = com.hedwig.morpheus.configuration.EntryPoint.class)
 public class MessageTest {
 
     @Test

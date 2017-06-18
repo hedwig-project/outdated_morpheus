@@ -32,8 +32,8 @@ sourceSets {
 }
 
 dependencies {
-    // Junit
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    // https://mvnrepository.com/artifact/junit/junit
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 
     // https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3
     compile group: 'org.eclipse.paho', name: 'org.eclipse.paho.client.mqttv3', version: '1.1.1'
@@ -55,9 +55,6 @@ dependencies {
 
     // Spring Boot starter
     compile("org.springframework.boot:spring-boot-starter")
-
-    // Sprint Boot Logging
-    compile("spring-boot-starter-logging")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

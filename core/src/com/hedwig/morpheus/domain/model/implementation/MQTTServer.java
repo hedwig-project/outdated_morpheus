@@ -1,12 +1,13 @@
 package com.hedwig.morpheus.domain.model.implementation;
 
-import com.hedwig.morpheus.business.interfaces.IMessageReceiver;
+import com.hedwig.morpheus.domain.model.interfaces.IMessageReceiver;
 import com.hedwig.morpheus.domain.model.interfaces.IServer;
 import com.hedwig.morpheus.security.Securities;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -15,6 +16,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.validation.constraints.NotNull;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 // TODO : Make this code all asynchronous
 // TODO : Make a server interface
@@ -43,17 +46,24 @@ public class MQTTServer implements IServer {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final ExecutorService threadPool = Executors.newCachedThreadPool();
+
+    private final MessageQueue messageQueue;
+
     SSLSocketFactory socketFactory;
 
     IMqttToken mqttConnectToken;
 
-    private MQTTServer() throws Exception {
+    @Autowired
+    private MQTTServer(MessageQueue messageQueue) throws Exception {
+        this.messageQueue = messageQueue;
+
         this.caCertificate = Paths.get("/home/hugo/Documents/TCC/dev/mqtt/certificates/ca.crt");
         this.serverCertificate = Paths.get("/home/hugo/Documents/TCC/dev/mqtt/certificates/device001.der");
         this.serverKey = Paths.get("/home/hugo/Documents/TCC/dev/mqtt/certificates/device001.key");
 
         this.id = "morpheus-localServer";
-        this.name =  "localhost";
+        this.name = "localhost";
         this.port = 8883;
 
         mqttConnectOptions = new MqttConnectOptions();
@@ -77,21 +87,23 @@ public class MQTTServer implements IServer {
         mqttAsyncClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
-               logger.error("Connection was lost. " + cause.getCause());
+                logger.error("Connection was lost. " + cause.getCause());
                 System.exit(0);
             }
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                  // TODO : Send arrived messages to the queue
 
-                logger.info("New message received from module: " + new String(mqttMessage.getPayload()));
-//                //Sensor sensor = new Sensor("Generic sensor", null, null, null, null);
-//                Message_old message = new Message_old();
-//                //message.setFrom(sensor);
-//                message.setPayload(new String(mqttMessage.getPayload(), "UTF-8"));
-//
-//                System.out.println("A new message has arrived: " + message.getPayload());
+                // TODO : Send arrived messages to the queue
+                // TODO : Make actual parsing of the message
+
+                threadPool.execute(() -> {
+                    logger.info("New message received from module: " + topic);
+                    Message message = new Message(topic,
+                                                  Message.MessageType.DATA_TRANSMISSION,
+                                                  new Message.MessageBody(new String(mqttMessage.getPayload())));
+                    messageQueue.push(message);
+                });
             }
 
             @Override

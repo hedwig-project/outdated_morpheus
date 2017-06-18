@@ -1,6 +1,6 @@
 package com.hedwig.morpheus.domain.model.implementation;
 
-import com.hedwig.morpheus.business.interfaces.IMessageSender;
+import com.hedwig.morpheus.domain.model.interfaces.IMessageSender;
 import com.hedwig.morpheus.domain.model.interfaces.IServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

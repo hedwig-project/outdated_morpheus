@@ -1,7 +1,7 @@
 package com.hedwig.morpheus.service.implementation;
 
-import com.hedwig.morpheus.business.interfaces.IMessageReceiver;
-import com.hedwig.morpheus.business.interfaces.IMessageSender;
+import com.hedwig.morpheus.domain.model.interfaces.IMessageReceiver;
+import com.hedwig.morpheus.domain.model.interfaces.IMessageSender;
 import com.hedwig.morpheus.domain.model.implementation.Message;
 import com.hedwig.morpheus.service.interfaces.IMessageManager;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
