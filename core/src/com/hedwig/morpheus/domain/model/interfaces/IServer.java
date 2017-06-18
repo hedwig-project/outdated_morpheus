@@ -1,6 +1,5 @@
 package com.hedwig.morpheus.domain.model.interfaces;
 
-import com.hedwig.morpheus.business.interfaces.IMessageReceiver;
 import com.hedwig.morpheus.domain.model.implementation.Message;
 import org.eclipse.paho.client.mqttv3.MqttException;
 

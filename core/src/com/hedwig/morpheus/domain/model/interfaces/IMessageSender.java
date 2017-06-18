@@ -1,4 +1,4 @@
-package com.hedwig.morpheus.business.interfaces;
+package com.hedwig.morpheus.domain.model.interfaces;
 
 import com.hedwig.morpheus.domain.model.implementation.Message;
 
